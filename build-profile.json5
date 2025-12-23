@@ -37,6 +37,94 @@
           ]
         }
       ]
+    },
+    {
+      "name": "base",
+      "srcPath": "./core/base",
+    },
+    {
+      "name": "data",
+      "srcPath": "./core/data",
+    },
+    {
+      "name": "database",
+      "srcPath": "./core/database",
+    },
+    {
+      "name": "datastore",
+      "srcPath": "./core/datastore",
+    },
+    {
+      "name": "designsystem",
+      "srcPath": "./core/designsystem",
+    },
+    {
+      "name": "model",
+      "srcPath": "./core/model",
+    },
+    {
+      "name": "network",
+      "srcPath": "./core/network",
+    },
+    {
+      "name": "result",
+      "srcPath": "./core/result",
+    },
+    {
+      "name": "state",
+      "srcPath": "./core/state",
+    },
+    {
+      "name": "ui",
+      "srcPath": "./core/ui",
+    },
+    {
+      "name": "util",
+      "srcPath": "./core/util",
+    },
+    {
+      "name": "navigation",
+      "srcPath": "./core/navigation",
+    },
+    {
+      "name": "auth",
+      "srcPath": "./feature/auth",
+    },
+    {
+      "name": "main",
+      "srcPath": "./feature/main",
+    },
+    {
+      "name": "user",
+      "srcPath": "./feature/user",
+    },
+    {
+      "name": "order",
+      "srcPath": "./feature/order",
+    },
+    {
+      "name": "goods",
+      "srcPath": "./feature/goods",
+    },
+    {
+      "name": "market",
+      "srcPath": "./feature/market",
+    },
+    {
+      "name": "cs",
+      "srcPath": "./feature/cs",
+    },
+    {
+      "name": "feedback",
+      "srcPath": "./feature/feedback",
+    },
+    {
+      "name": "common",
+      "srcPath": "./feature/common",
+    },
+    {
+      "name": "launch",
+      "srcPath": "./feature/launch",
     }
   ]
 }
