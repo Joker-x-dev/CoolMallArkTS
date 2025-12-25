@@ -13,6 +13,7 @@ import { UserGraph } from 'user';
 import { OrderGraph } from 'order';
 import { MarketGraph } from 'market';
 import { IBestORMInit } from 'database';
+import { ContextUtil, PermissionUtils } from 'util';
 
 const DOMAIN = 0x0000;
 
@@ -33,6 +34,7 @@ export default class EntryAbility extends UIAbility {
     try {
       this.context.getApplicationContext().setColorMode(ConfigurationConstant.ColorMode.COLOR_MODE_NOT_SET);
       this.registerRouter();
+      ContextUtil.init(this.context)
     } catch (err) {
       hilog.error(DOMAIN, 'testTag', 'Failed to set colorMode. Cause: %{public}s', JSON.stringify(err));
     }
@@ -49,6 +51,10 @@ export default class EntryAbility extends UIAbility {
     await this.initIBestORM();
     windowStage.loadContent('view/EntryPage', (_) => {
       this.initIBestUI(windowStage);
+      const permissionCli = new PermissionUtils();
+      permissionCli.requestAudioPermission((granted: boolean) => {
+        hilog.info(DOMAIN, 'testTag', 'requestAudioPermission: %{public}d', granted);
+      })
     });
   }
 

@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "青商城"
+    },
+    {
+      "name": "dependency_microphone_reason",
+      "value": "使用麦克风录音"
     }
   ]
 }

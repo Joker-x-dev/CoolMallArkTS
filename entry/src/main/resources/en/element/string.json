@@ -11,6 +11,10 @@
     {
       "name": "EntryAbility_label",
       "value": "Cool Mall"
+    },
+    {
+      "name": "dependency_microphone_reason",
+      "value": "Recording with microphone"
     }
   ]
 }

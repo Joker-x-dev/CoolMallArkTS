@@ -5,4 +5,6 @@
 
 export { PreferencesUtil } from "./src/main/ets/storage/PreferencesUtil";
 
-export { getHostCtx } from "./src/main/ets/context/ContextUtil";
+export { getHostCtx, ContextUtil } from "./src/main/ets/context/ContextUtil";
+
+export { PermissionUtils } from "./src/main/ets/permission/PermissionUtils";
