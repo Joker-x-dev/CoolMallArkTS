@@ -5,5 +5,8 @@
   "main": "Index.ets",
   "author": "",
   "license": "Apache-2.0",
-  "dependencies": {}
+  "dependencies": {
+    "model": "file:../model",
+    "@ibestservices/ibest-orm": "^2.0.2"
+  }
 }

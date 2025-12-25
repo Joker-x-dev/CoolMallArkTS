@@ -5,5 +5,14 @@
   "main": "Index.ets",
   "author": "",
   "license": "Apache-2.0",
-  "dependencies": {}
+  "dependencies": {
+    "navigation": "file:../../core/navigation",
+    "state": "file:../../core/state",
+    "model": "file:../../core/model",
+    "data": "file:../../core/data",
+    "result": "file:../../core/result",
+    "base": "file:../../core/base",
+    "designsystem": "file:../../core/designsystem",
+    "ui": "file:../../core/ui"
+  }
 }

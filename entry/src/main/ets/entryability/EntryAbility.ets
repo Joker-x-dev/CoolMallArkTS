@@ -3,6 +3,16 @@ import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
 import { IBestInit, IBestSetUIBaseStyle } from 'ui';
 import { MainGraph } from 'main';
+import { AuthGraph } from 'auth';
+import { CommonGraph } from 'common';
+import { CsGraph } from 'cs';
+import { FeedbackGraph } from 'feedback';
+import { GoodsGraph } from 'goods';
+import { LaunchGraph } from 'launch';
+import { UserGraph } from 'user';
+import { OrderGraph } from 'order';
+import { MarketGraph } from 'market';
+import { IBestORMInit } from 'database';
 
 const DOMAIN = 0x0000;
 
@@ -36,14 +46,9 @@ export default class EntryAbility extends UIAbility {
    * @returns {Promise<void>} 无返回值的Promise
    */
   async onWindowStageCreate(windowStage: window.WindowStage): Promise<void> {
+    await this.initIBestORM();
     windowStage.loadContent('view/EntryPage', (_) => {
-      IBestInit(windowStage, this.context)
-      IBestSetUIBaseStyle({
-        primary: $r('app.color.primary'),
-        success: $r('app.color.success'),
-        warning: $r('app.color.warning'),
-        danger: $r('app.color.danger'),
-      })
+      this.initIBestUI(windowStage);
     });
   }
 
@@ -81,9 +86,46 @@ export default class EntryAbility extends UIAbility {
   }
 
   /**
+   * 初始化 IBest UI 组件库
+   * @param {window.WindowStage} windowStage - 窗口阶段
+   */
+  initIBestUI(windowStage: window.WindowStage): void {
+    IBestInit(windowStage, this.context);
+    this.setIBestUIBaseStyle();
+  }
+
+  /**
+   * 设置 IBest UI 组件库基础样式
+   */
+  setIBestUIBaseStyle(): void {
+    IBestSetUIBaseStyle({
+      primary: $r('app.color.primary'),
+      success: $r('app.color.success'),
+      warning: $r('app.color.warning'),
+      danger: $r('app.color.danger'),
+    });
+  }
+
+  /**
+   * 初始化 IBest ORM 数据库
+   */
+  async initIBestORM(): Promise<void> {
+    await IBestORMInit(this.context, { name: "app.db" });
+  }
+
+  /**
    * 注册路由
    */
-  registerRouter() {
+  registerRouter(): void {
     new MainGraph().register();
+    new AuthGraph().register();
+    new CommonGraph().register();
+    new CsGraph().register();
+    new FeedbackGraph().register();
+    new GoodsGraph().register();
+    new LaunchGraph().register();
+    new UserGraph().register();
+    new OrderGraph().register();
+    new MarketGraph().register();
   }
 }

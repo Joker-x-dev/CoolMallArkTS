@@ -1,6 +1,6 @@
 import common from "@ohos.app.ability.common";
 import { getBreakpointState, getWindowSafeAreaState } from "state";
-import { WindowAdapter } from "../window/WindowAdapter";
+import { WindowAdapter } from "../adapter/WindowAdapter";
 
 /**
  * @file 应用入口 ViewModel，负责沉浸式窗口、安全区与断点监听初始化

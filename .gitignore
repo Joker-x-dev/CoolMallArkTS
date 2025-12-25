@@ -12,3 +12,5 @@
 /.appanalyzer
 /context/
 **/BuildProfile.ets
+/AGENTS.md
+/blog_post.md
