@@ -1,10 +1,11 @@
+import { LottieView } from "@ohos/lottie-turbo";
 import { AppNavDestination } from "ui";
-import { NotificationBasicOptions, NotificationLongTextOptions,
-  NotificationMultiLineOptions,
-  NotificationPictureOptions,
-  NotificationTemplateOptions,
-  NotificationUtil } from "util";
-import MainViewModel from "../viewmodel/MainViewModel";
+import MainViewModel, { IMainTabItem } from "../viewmodel/MainViewModel";
+import { HomePage } from "./HomePage";
+import { CategoryPage } from "./CategoryPage";
+import { CartPage } from "./CartPage";
+import { MePage } from "./MePage";
+import { P100 } from "designsystem";
 
 /**
  * @file 主页面视图
@@ -24,7 +25,7 @@ export struct MainPage {
    */
   build() {
     AppNavDestination({
-      title: "主页面",
+      hideTitleBar: true,
       viewModel: this.vm
     }) {
       this.MainContent();
@@ -32,101 +33,98 @@ export struct MainPage {
   }
 
   /**
-   * 主页面内容视图
+   * 主页面内容视图，包含可左右滑动的页面与底部 Lottie 导航
    * @returns {void} 无返回值
    */
   @Builder
   private MainContent() {
-    Text("主页面内容视图")
-    Column() {
-      Button("申请发送通知权限，未授权则拉起一次二次授权申请").onClick(async()=>{
-        NotificationUtil.Permission.requestPermission((grant) => {
-          if (!grant) {
-            NotificationUtil.Permission.openSettings();
-          }
-        })
-      })
-      Button("预设默认配置").onClick(async()=>{
-        const smallIcon = await NotificationUtil.Tools.createCompressedIcon($r("app.media.notify_test_1"));
-        const largeIcon = await NotificationUtil.Tools.createCompressedIcon($r("app.media.notify_test_3"));
-        const picture = await NotificationUtil.Tools.createCompressedImage($r("app.media.notify_test_3"));
-        const wantAgent = await NotificationUtil.Tools.getSelfWantAgent();
-        NotificationUtil.PresetConfig((config) => {
-          config.wantAgent = wantAgent
-          config.removeRedirectWantAgent = wantAgent
-          config.smallIcon = smallIcon
-          config.largeIcon = largeIcon
-          config.showStatusBarIcon = true
-          config.autoDismissOnTap = true
-          config.supplementaryContent = "默认配置"
-          config.lockscreenDisplayImage = picture
-        })
-      })
-      Button("发送文本消息").onClick(async()=>{
-        const options: NotificationBasicOptions = {
-          mainTitle: "通知标题",
-          mainContent: "通知内容"
-        }
-        const id = await NotificationUtil.Sender.sendText(options);
-        console.log("Notification sendText", id);
-      })
-      Button("发送长文本消息").onClick(async()=>{
-        const options: NotificationLongTextOptions = {
-          mainTitle: "通知标题",
-          mainContent: "通知内容",
-          summaryText: "摘要，对长文本内容的总结",
-          detailedLongContent: "展开后显示的全部内容",
-          expandedDisplayTitle: "通知展开的标题"
-        }
-        const id = await NotificationUtil.Sender.sendLongText(options);
-        console.log("Notification sendLongText", id);
-      })
-      Button("发送多行文本消息").onClick(async()=>{
-        const options: NotificationMultiLineOptions = {
-          mainTitle: "通知标题",
-          mainContent: "通知内容",
-          summaryText: "摘要，对长文本内容的总结",
-          expandedDisplayTitle: "通知展开的标题",
-          multiLineContentList: ["111","222","333"]
-        }
-        const id = await NotificationUtil.Sender.sendMultiLine(options);
-        console.log("Notification sendMultiLine", id);
-      })
-      Button("发送图片消息").onClick(async()=>{
-        const pixelMap = await NotificationUtil.Tools.createCompressedImage($r("app.media.notify_test_3"))
-        const options: NotificationPictureOptions = {
-          mainTitle: "通知标题",
-          mainContent: "通知内容",
-          summaryText: "摘要，对长文本内容的总结",
-          expandedDisplayTitle: "通知展开的标题",
-          attachedImage: pixelMap
-        }
-        const id = await NotificationUtil.Sender.sendPicture(options);
-        console.log("Notification sendPicture", id, pixelMap.getPixelBytesNumber());
-      })
-      Button("下载模板消息").onClick(async()=>{
-        if(await NotificationUtil.Tools.isSupportTemplate()) {
-          const options: NotificationTemplateOptions = {
-            mainTitle: "通知标题",
-            mainContent: "通知内容",
-            downloadFileName: "学习资料.mp4",
-            downloadProgress: 85
-          }
-          const id = await NotificationUtil.Sender.sendTemplate(options);
-          console.log("Notification sendTemplate", id);
-        } else {
-          console.log("Notification isSupportTemplate false");
-        }
-      })
-      Button("清楚通知").onClick(()=>{
-        NotificationUtil.Manager.cancelAll();
-      })
-      Button("设置角标").onClick(()=>{
-        NotificationUtil.Manager.setBadgeNumber(3);
-      })
-      Button("清楚角标").onClick(()=>{
-        NotificationUtil.Manager.clearBadgeNumber();
-      })
+    Tabs({
+      index: this.vm.currentPageIndex,
+      barPosition: BarPosition.End
+    }) {
+      TabContent() {
+        this.renderTabContent(0);
+      }
+      .tabBar(this.renderTabBar(this.vm.tabItems[0], 0));
+
+      TabContent() {
+        this.renderTabContent(1);
+      }
+      .tabBar(this.renderTabBar(this.vm.tabItems[1], 1));
+
+      TabContent() {
+        this.renderTabContent(2);
+      }
+      .tabBar(this.renderTabBar(this.vm.tabItems[2], 2));
+
+      TabContent() {
+        this.renderTabContent(3);
+      }
+      .tabBar(this.renderTabBar(this.vm.tabItems[3], 3));
     }
+    .barMode(BarMode.Fixed)
+    .scrollable(true)
+    .width(P100)
+    .height(P100)
+    .onChange((index: number) => {
+      this.vm.handleTabChanged(index);
+    });
+  }
+
+  /**
+   * 渲染 Tabs 的底部导航项
+   * @param {IMainTabItem} item - Tab 配置
+   * @param {number} index - 索引
+   * @returns {void} 无返回值
+   */
+  @Builder
+  private renderTabBar(item: IMainTabItem, index: number) {
+    Column() {
+      LottieView({
+        lottieId: `main_tab_${index}`,
+        loop: false,
+        autoplay: this.vm.currentPageIndex === index,
+        controller: this.vm.lottieControllers[index],
+        path: item.animation
+      })
+        .width(32)
+        .height(32)
+        .onAppear(() => {
+          this.vm.handleTabAppear(index);
+        });
+
+      Text(item.title)
+        .fontSize(12)
+        .fontColor(this.vm.currentPageIndex === index ? Color.Black : Color.Gray)
+        .margin({ top: 4 });
+    }
+    .justifyContent(FlexAlign.Center)
+    .alignItems(HorizontalAlign.Center)
+    .padding({ top: 6, bottom: 8 })
+    .layoutWeight(1);
+  }
+
+  /**
+   * 渲染当前页面内容
+   * @param {number} index - 页面索引
+   * @returns {void} 无返回值
+   */
+  @Builder
+  private renderTabContent(index: number) {
+    Column() {
+      if (index === 0) {
+        HomePage();
+      } else if (index === 1) {
+        CategoryPage();
+      } else if (index === 2) {
+        CartPage();
+      } else {
+        MePage();
+      }
+    }
+    .width(P100)
+    .height(P100)
+    .justifyContent(FlexAlign.Center)
+    .alignItems(HorizontalAlign.Center);
   }
 }

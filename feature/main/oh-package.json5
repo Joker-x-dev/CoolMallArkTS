@@ -14,6 +14,9 @@
     "base": "file:../../core/base",
     "designsystem": "file:../../core/designsystem",
     "ui": "file:../../core/ui",
-    "util": "file:../../core/util"
-  }
+    "util": "file:../../core/util",
+    "@ohos/lottie-turbo": "^1.0.5"
+  },
+  "devDependencies": {},
+  "dynamicDependencies": {}
 }
