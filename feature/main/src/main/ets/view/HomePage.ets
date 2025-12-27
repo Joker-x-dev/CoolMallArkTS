@@ -1,4 +1,5 @@
-import { AppNavDestination } from "ui";
+import { AppNavDestination, BaseNetWorkListView, RefreshLayout } from "ui";
+import { HomeBanner } from "../component/HomeBanner";
 import HomeViewModel from "../viewmodel/HomeViewModel";
 
 /**
@@ -19,10 +20,13 @@ export struct HomePage {
    */
   build() {
     AppNavDestination({
-      title: "首页",
       viewModel: this.vm
     }) {
-      this.HomeContent();
+      BaseNetWorkListView({
+        uiState: this.vm.uiState,
+        onRetry: (): void => this.vm.loadHomeData(),
+        content: (): void => this.HomeContent()
+      });
     }
   }
 
@@ -32,6 +36,20 @@ export struct HomePage {
    */
   @Builder
   private HomeContent() {
-    Text("首页内容视图")
+    RefreshLayout({
+      loading: this.vm.isLoading,
+      isEnableSlideUp: this.vm.isEnableSlideUp,
+      onRefresh: (direction): void => this.vm.onRefreshDirection(direction),
+    }) {
+      List() {
+        if ((this.vm.pageData.banner ?? []).length > 0) {
+          ListItem() {
+            HomeBanner({
+              bannerList: this.vm.pageData.banner ?? [],
+            });
+          }
+        }
+      };
+    }
   }
 }

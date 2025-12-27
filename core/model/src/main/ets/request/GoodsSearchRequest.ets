@@ -48,7 +48,9 @@ export class GoodsSearchRequest {
    * @param {Partial<GoodsSearchRequest>} init - 初始化数据
    */
   constructor(init?: Partial<GoodsSearchRequest>) {
-    if (!init) return;
+    if (!init) {
+      return;
+    }
     this.page = init.page ?? this.page;
     this.size = init.size ?? this.size;
     this.typeId = init.typeId ?? this.typeId;
