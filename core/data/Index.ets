@@ -36,3 +36,5 @@ export { UserInfoRepository } from './src/main/ets/repository/UserInfoRepository
 export { TokenStoreRepository } from './src/main/ets/repository/TokenStoreRepository';
 
 export { OrderCacheStoreRepository } from './src/main/ets/repository/OrderCacheStoreRepository';
+
+export { LaunchStoreRepository } from './src/main/ets/repository/LaunchStoreRepository';

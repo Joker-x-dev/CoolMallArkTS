@@ -152,7 +152,7 @@ to join.
 
 
 - **Marketing Module (market)**
-    - Coupon Management (coupon) `To be developed`
+    - Coupon Management (coupon) `Completed`
 
 
 - **Customer Service Module (cs)**
@@ -174,8 +174,8 @@ to join.
 
 
 - **Launch Process Module (launch)**
-    - Splash Screen (splash) `To be developed`
-    - Guide Pages (guide) `To be developed`
+    - Splash Screen (splash) `UI only`
+    - Guide Pages (guide) `UI only`
 
 ## Project Structure
 

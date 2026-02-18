@@ -1,4 +1,6 @@
-import { AppNavDestination } from "ui";
+import { ColumnCenter, P100, SpaceVerticalMedium, SpaceVerticalXXLarge } from "designsystem";
+import { WindowSafeAreaState, getWindowSafeAreaState } from "state";
+import { AppNavDestination, LogoIcon } from "ui";
 import SplashViewModel from "../viewmodel/SplashViewModel";
 
 /**
@@ -19,8 +21,9 @@ export struct SplashPage {
    */
   build() {
     AppNavDestination({
-      title: "启动页",
-      viewModel: this.vm
+      viewModel: this.vm,
+      hideTitleBar: true,
+      pageBackgroundColor: $r("app.color.bg_white")
     }) {
       this.SplashContent();
     }
@@ -32,6 +35,23 @@ export struct SplashPage {
    */
   @Builder
   private SplashContent() {
-    Text("启动页内容视图")
+    ColumnCenter({ fillMaxSize: true }) {
+      Blank().layoutWeight(1);
+
+      LogoIcon({ iconSize: 120 });
+
+      Blank().layoutWeight(1);
+
+      Text($r("app.string.app_name_splash"))
+        .fontSize($r("app.float.headline_large"))
+        .fontWeight(FontWeight.Medium)
+        .fontColor($r("app.color.text_primary"));
+
+      SpaceVerticalMedium();
+
+      Text($r("app.string.app_copyright"))
+        .fontSize($r("app.float.body_medium"))
+        .fontColor($r("app.color.text_tertiary"));
+    }
   }
 }
